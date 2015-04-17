@@ -1,0 +1,25 @@
+.header {
+  margin: 0 0 10px;
+  color: #fff;
+  background: #333;
+}
+
+.form-row {
+  margin: 0 0 10px;
+}
+
+.input-group--first {
+  margin-right: 10px;
+}
+
+.form-inline .input-group > .input-number {
+  width: 70px;
+}
+
+label {
+  padding-right: 10px;
+}
+
+.projectDisplay {
+  margin: 0 0 10px;
+}
