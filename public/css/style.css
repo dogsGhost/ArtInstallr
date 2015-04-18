@@ -19,11 +19,17 @@
 }
 
 .input-group--first {
-  margin-right: 10px;
+  margin: 0 0 5px;
 }
 
-.form-inline .input-group > .input-number {
-  width: 70px;
+@media (min-width: 768px) {
+  .input-group--first {
+    margin: 0 10px 0 0;
+  }
+
+  .form-inline .input-group > .input-number {
+    width: 70px;
+  }  
 }
 
 label {
@@ -35,6 +41,7 @@ label {
 }
 
 .installation {
+  overflow-x: scroll;
   margin: 10px 0 0;
   padding: 4em 20px 0;
   background: #eee;
@@ -48,12 +55,17 @@ label {
 
 .piece {
   position: absolute;
-  background: #999;
+  background: #777;
 }
 
+.wallView-text,
 .piece-name {
   display: block;
   padding: 4px;
   color: #fff;
   text-align: center;
+}
+
+.wallView-text {
+  color: #ccc;
 }

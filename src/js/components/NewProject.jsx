@@ -15,13 +15,14 @@ module.exports = React.createClass({
     var collectionWidth = 0;
     var spacerWidth = 0;
 
-    this.state.collection.forEach(function (el) {
-      collectionWidth += el.width;
-    });
+    this.state.collection.forEach((el) => collectionWidth += el.width);
 
     // Calculate spacer width by subtracting width of each piece from wall width,
     // then dividing by total number of pieces plus one to account for having a spacer on each end.
-    spacerWidth = parseInt((this.props.settings.wallDims.width - collectionWidth) / (this.state.collection.length + 1), 10);
+    spacerWidth = parseInt(
+      (this.props.settings.wallDims.width - collectionWidth) / (this.state.collection.length + 1),
+      10
+    );
 
     React.render(
       <InstallView
@@ -119,7 +120,7 @@ module.exports = React.createClass({
             <div className="form-inline">
               <div className="form-group">
                 <label>title of piece</label>
-                <input className="form-control" type="text" ref="titleOfPiece" />
+                <input className="form-control" type="text" ref="titleOfPiece" placeholder="Piece #" />
               </div>
             </div>
           </div>
@@ -134,7 +135,7 @@ module.exports = React.createClass({
                 </div>
                 <div className="input-group input-group--first">
                   <input className="form-control input-number" ref="pieceHeightIn" type="number" min="0" defaultValue="0" />
-                  <div className="input-group-addon">ft</div>
+                  <div className="input-group-addon">in</div>
                 </div>                  
               </div>
             </div>
@@ -150,7 +151,7 @@ module.exports = React.createClass({
                 </div>
                 <div className="input-group input-group--first">
                   <input className="form-control input-number" ref="pieceWidthIn" type="number" min="0" defaultValue="0" />
-                  <div className="input-group-addon">ft</div>
+                  <div className="input-group-addon">in</div>
                 </div>                  
               </div>
             </div>

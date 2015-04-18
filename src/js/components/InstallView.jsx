@@ -6,7 +6,7 @@ module.exports = React.createClass({
     // This is the multiplier for coverting inches to pixels.
     var _m = 6;
     var spacer = this.props.spacer;
-    var projectPieces = this.props.collection.map(function (piece, index) {
+    var projectPieces = this.props.collection.map((piece, index) => {
       var styles = {
         height: (piece.height * _m) + 'px',
         width: (piece.width * _m) + 'px',
@@ -38,6 +38,7 @@ module.exports = React.createClass({
 
       <div className="installation">
         <div className="wallView" style={wallStyles}>
+          <span className="wallView-text">wall</span>
           {projectPieces}
         </div>
       </div>
