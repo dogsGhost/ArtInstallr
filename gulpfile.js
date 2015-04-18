@@ -33,10 +33,6 @@ gulp.task('js', function () {
     .pipe(gulp.dest('./public/js/'));
 });
 
-gulp.task('watch', function() {
-    gulp.watch('src/js/**/*.jsx', ['js']);
-});
-
 /*
  Styles - refactor later for more efficient building
  */
@@ -51,3 +47,16 @@ gulp.task('css', function() {
       .pipe(concat('style.css'))
       .pipe(gulp.dest('./public/css/'));
 });
+
+/*
+ Watch
+ */
+gulp.task('watch', function() {
+    gulp.watch('src/js/**/*.jsx', ['js']);
+    gulp.watch('src/css/style.css', ['css']);
+});
+
+/*
+ Default
+ */
+gulp.task('default', ['css', 'js']);

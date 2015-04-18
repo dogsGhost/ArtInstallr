@@ -35,7 +35,6 @@ module.exports = React.createClass({
     };
 
     return (
-
       <div className="installation">
         <div className="wallView" style={wallStyles}>
           <span className="wallView-text">wall</span>

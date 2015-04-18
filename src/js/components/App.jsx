@@ -44,11 +44,14 @@ module.exports = React.createClass({
   },
 
   render() {
-    var main;
-
     // removes initial inputs once fields completed
-    if (!this.state.projectInitiated) {
-      main =
+    if (this.state.projectInitiated) {
+      return (
+        <div></div>
+      );
+    }
+
+    return (
       <div className="projectSettings">
         <p>Measurements can be given in a combination of feet &amp; inches, or just inches.</p>
 
@@ -83,12 +86,6 @@ module.exports = React.createClass({
           </div>
         </div>
         <button onClick={this.handleClick} className="btn btn-primary">Add Pieces</button>
-      </div>
-    }
-
-    return (
-      <div>
-        {main}
       </div>
     );
   }
