@@ -52,12 +52,12 @@ label {
 
 .wallView-text,
 .piece-name {
+  display: block;
   color: #fff;
   text-align: center;
 }
 
 .wallView-text {
-  display: block;
   padding: 4px;
   color: #ccc;
 }
