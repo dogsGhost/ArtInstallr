@@ -1,6 +1,7 @@
 const React = require('react');
 const utils = require('./../utils');
 const ProjectPiece = require('./ProjectPiece.jsx');
+const InstallView = require('./InstallView.jsx');
 
 module.exports = React.createClass({
   getInitialState() {
@@ -11,8 +12,24 @@ module.exports = React.createClass({
   },
 
   showInstall(e) {
-    // TODO: calculate layout of pieces and render view.
-    console.log('show install values and visual layout');
+    var collectionWidth = 0;
+    var spacerWidth = 0;
+
+    this.state.collection.forEach(function (el) {
+      collectionWidth += el.width;
+    });
+
+    // Calculate spacer width by subtracting width of each piece from wall width,
+    // then dividing by total number of pieces plus one to account for having a spacer on each end.
+    spacerWidth = parseInt((this.props.settings.wallDims.width - collectionWidth) / (this.state.collection.length + 1), 10);
+
+    React.render(
+      <InstallView
+        settings={this.props.settings}
+        spacer={spacerWidth}
+        collection={this.state.collection} />,
+      document.getElementById('installation')
+    );
   },
 
   addPiece(e) {
@@ -38,7 +55,6 @@ module.exports = React.createClass({
     // Add a piece to collection if user values are valid.
     if (piece.height && piece.width) {
       var _data = this.state.collection.concat(piece);
-
       // Reset form fields.
       titleField.value = '';
       heightFieldFt.value = '0';
@@ -60,9 +76,7 @@ module.exports = React.createClass({
   // Remove a piece from the collection.
   destroy(piece, e) {
     e.preventDefault();
-    var _data = this.state.collection.filter(function (target) {
-      return target !== piece;
-    });
+    var _data = this.state.collection.filter((target) => target !== piece);
 
     this.setState({
       collection: _data
@@ -75,7 +89,7 @@ module.exports = React.createClass({
 
   render() {
     // Build list of projects to display.
-    var projectPieces = this.state.collection.map(function (piece, index) {
+    var projectPieces = this.state.collection.map((piece, index) => {
       return (
         <ProjectPiece
           key={index}
@@ -83,7 +97,7 @@ module.exports = React.createClass({
           onEdit={this.edit}
           piece={piece} />
       );
-    }, this);
+    });
 
     return (
       <div>
@@ -93,7 +107,7 @@ module.exports = React.createClass({
             <ol className="projectList">
               {projectPieces}
             </ol>
-            <button onClick={this.showInstall} className="btn btn-primary" disabled>Show Installation</button>
+            <button onClick={this.showInstall} className="btn btn-primary">Show Installation</button>
           </div> :
           <p><em>No pieces in current project.</em></p>
           

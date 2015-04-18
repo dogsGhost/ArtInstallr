@@ -23,3 +23,27 @@ label {
 .projectDisplay {
   margin: 0 0 10px;
 }
+
+.installation {
+  margin: 10px 0 0;
+  padding: 4em 20px 0;
+  background: #eee;
+}
+
+.wallView {
+  margin: 0 auto;
+  position: relative;
+  background: #fff;
+}
+
+.piece {
+  position: absolute;
+  background: #999;
+}
+
+.piece-name {
+  display: block;
+  padding: 4px;
+  color: #fff;
+  text-align: center;
+}

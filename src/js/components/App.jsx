@@ -19,9 +19,10 @@ module.exports = React.createClass({
           React.findDOMNode(this.refs.eyeLevelInches).value
         )
     };
-
+    // This lets us change how tall the wall is.
+    const _modifier = 1;
     settings.wallDims = {
-      height: settings.eyeLevel * 2,
+      height: settings.eyeLevel + (settings.eyeLevel * _modifier),
       width:
         utils.toInches(
           React.findDOMNode(this.refs.wallWidthFeet).value,
