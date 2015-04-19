@@ -10,7 +10,8 @@ module.exports = React.createClass({
     };
   },
 
-  handleClick(e) {
+  initNewProject(e) {
+    e.preventDefault();
     // Calculate settings from input values.
     var settings = {
       eyeLevel:
@@ -52,15 +53,15 @@ module.exports = React.createClass({
     }
 
     return (
-      <div className="projectSettings">
+      <form className="projectSettings"  onSubmit={this.initNewProject}>
         <p>Measurements can be given in a combination of feet &amp; inches, or just inches.</p>
 
         <div className="form-row">
           <div className="form-inline">
             <div className="form-group">
-              <label>Base eye level</label>
+              <label htmlFor="eyeLevelFeet">Base eye level</label>
               <div className="input-group input-group--first">
-                <input className="form-control input-number" ref="eyeLevelFeet" type="number" min="0" defaultValue="0" />
+                <input className="form-control input-number" ref="eyeLevelFeet" id="eyeLevelFeet" type="number" min="0" defaultValue="0" />
                 <div className="input-group-addon">ft</div>
               </div>
               <div className="input-group">
@@ -68,14 +69,14 @@ module.exports = React.createClass({
                 <div className="input-group-addon">in</div>
               </div>
             </div>
-          </div>      
+          </div>
         </div>
         <div className="form-row">
           <div className="form-inline">
             <div className="form-group">
-              <label>Wall length</label>
+              <label htmlFor="wallWidthFeet">Wall length</label>
               <div className="input-group input-group--first">
-                <input className="form-control input-number" ref="wallWidthFeet" type="number" min="0" defaultValue="0" />
+                <input className="form-control input-number" ref="wallWidthFeet" id="wallWidthFeet" type="number" min="0" defaultValue="0" />
                 <div className="input-group-addon">ft</div>
               </div>
               <div className="input-group">
@@ -85,8 +86,8 @@ module.exports = React.createClass({
             </div>
           </div>
         </div>
-        <button onClick={this.handleClick} className="btn btn-primary">Add Pieces</button>
-      </div>
+        <button type="submit" className="btn btn-primary">Add Pieces</button>
+      </form>
     );
   }
 });
