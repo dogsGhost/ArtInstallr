@@ -1,6 +1,6 @@
 # ArtInstallr
 
-v0.2.1
+v0.3.2
 
 Figure out measurements for hanging art on walls.
 
