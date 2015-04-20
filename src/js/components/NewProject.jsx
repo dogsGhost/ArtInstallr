@@ -1,7 +1,7 @@
 const React = require('react');
 const utils = require('./../utils');
 const ProjectPiece = require('./ProjectPiece.jsx');
-const InstallView = require('./InstallView.jsx');
+const ProjectCanvas = require('./ProjectCanvas.jsx');
 
 module.exports = React.createClass({
   getInitialState() {
@@ -9,28 +9,6 @@ module.exports = React.createClass({
       // Start with an empty collection.
       collection: []
     };
-  },
-
-  showInstall(e) {
-    var collectionWidth = 0;
-    var spacerWidth = 0;
-
-    this.state.collection.forEach((el) => collectionWidth += el.width);
-
-    // Calculate spacer width by subtracting width of each piece from wall width,
-    // then dividing by total number of pieces plus one to account for having a spacer on each end.
-    spacerWidth = parseInt(
-      (this.props.settings.wallDims.width - collectionWidth) / (this.state.collection.length + 1),
-      10
-    );
-
-    React.render(
-      <InstallView
-        settings={this.props.settings}
-        spacer={spacerWidth}
-        collection={this.state.collection} />,
-      document.getElementById('installation')
-    );
   },
 
   addPiece(e) {
@@ -57,7 +35,6 @@ module.exports = React.createClass({
 
     // Add a piece to collection if user values are valid.
     if (piece.height && piece.width) {
-      var _data = this.state.collection.concat(piece);
       // Reset form fields.
       titleField.value = '';
       heightFieldFt.value = '0';
@@ -66,7 +43,7 @@ module.exports = React.createClass({
       widthFieldIn.value = '0';
 
       this.setState({
-        collection: _data
+        collection: this.state.collection.concat(piece)
       });
     } else {
       // TODO: form validation error message
@@ -74,7 +51,7 @@ module.exports = React.createClass({
     }
 
     // Drop focus from the submit button.
-    e.currentTarget.blur();
+    React.findDOMNode(this.refs.newPieceFormSubmit).blur();
   },
 
   // Remove a piece from the collection.
@@ -111,7 +88,6 @@ module.exports = React.createClass({
               <ol className="projectList">
                 {projectPieces}
               </ol>
-              <button onClick={this.showInstall} className="btn btn-primary">Show Installation</button>
             </div> :
             <p><em>No pieces in current project.</em></p>
         }
@@ -160,9 +136,14 @@ module.exports = React.createClass({
               </div>
             </div>
           </div>
-          <button type="submit" className="btn btn-primary">Add Piece</button>
+          <button type="submit" ref="newPieceFormSubmit" className="btn btn-primary">Add Piece</button>
         </form>
 
+        {
+          this.state.collection.length ?
+            <ProjectCanvas settings={this.props.settings} collection={this.state.collection} /> :
+            false
+        }
       </div>
     );
   }

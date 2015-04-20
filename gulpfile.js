@@ -63,8 +63,6 @@ gulp.task('connect', function () {
       baseDir: './public/'
     }
   });
-
-  gulp.watch('public/**/*').on('change', reload);  
 });
 
 /*
