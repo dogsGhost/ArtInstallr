@@ -9,7 +9,7 @@ var uglify = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
 var babelify = require('babelify');
 var concat = require('gulp-concat');
-var browserSync = require('browser-sync');
+var browserSync = require('browser-sync').create();
 
 /*
  Browserify
@@ -62,6 +62,10 @@ gulp.task('connect', function () {
     server: {
       baseDir: './public/'
     }
+  });
+
+  gulp.watch(['./public/index.html', './public/js/*.js', './public/css/*.css']).on('change', function () {
+    browserSync.reload();
   });
 });
 
