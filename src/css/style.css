@@ -31,37 +31,10 @@ label {
   margin: 0 0 10px;
 }
 
-/*.installation {
-  padding: 4em 0 0;
-  background: #eee;
-}*/
-
-.wallView {
-  display: block;
-  margin: 0 auto;
-  background: #fff;
+.projectList-item {
+  cursor: ns-resize;
 }
 
-.piece {
-  position: absolute;
-  background: #777;
-  /*cursor: move;*/
-}
-
-.wallView-text,
-.piece-name {
-  display: block;
-  color: #fff;
-  text-align: center;
-}
-
-.wallView-text {
-  padding: 4px;
-  color: #ccc;
-}
-
-.piece-name {
-  position: relative;
-  top: 50%;
-  margin-top: -7px;
+.dragging {
+  background: #ecf791;
 }

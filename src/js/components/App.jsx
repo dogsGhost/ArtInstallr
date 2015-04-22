@@ -13,7 +13,7 @@ module.exports = React.createClass({
   initNewProject(e) {
     e.preventDefault();
     // Calculate settings from input values.
-    var settings = {
+    this.settings = {
       eyeLevel:
         utils.toInches(
           React.findDOMNode(this.refs.eyeLevelFeet).value,
@@ -22,8 +22,8 @@ module.exports = React.createClass({
     };
     // This lets us change how tall the wall is.
     const _modifier = 0.8;
-    settings.wallDims = {
-      height: parseInt(settings.eyeLevel + (settings.eyeLevel * _modifier), 10),
+    this.settings.wallDims = {
+      height: parseInt(this.settings.eyeLevel + (this.settings.eyeLevel * _modifier), 10),
       width:
         utils.toInches(
           React.findDOMNode(this.refs.wallWidthFeet).value,
@@ -32,12 +32,10 @@ module.exports = React.createClass({
     };
 
     // If the values passed were valid render next view.
-    if (settings.eyeLevel && settings.wallDims.width) {
+    if (this.settings.eyeLevel && this.settings.wallDims.width) {
       this.setState({
         projectInitiated: true
       });
-
-      React.render(<NewProject settings={settings} />, document.getElementById('app'));
     } else {
       // TODO: form validation error message
       console.log('field is missing a value');
@@ -47,7 +45,9 @@ module.exports = React.createClass({
   render() {
     // removes initial inputs once fields completed
     if (this.state.projectInitiated) {
-      return false;
+      return (
+        <NewProject settings={this.settings} />
+      );
     }
 
     return (

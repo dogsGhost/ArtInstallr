@@ -7,7 +7,9 @@ module.exports = React.createClass({
   getInitialState() {
     return {
       // Start with an empty collection.
-      collection: []
+      data: {
+        pieces: []
+      }
     };
   },
 
@@ -20,7 +22,7 @@ module.exports = React.createClass({
     var widthFieldIn = React.findDOMNode(this.refs.pieceWidthIn);
     var piece = {
       // Generic fallback title if none is given.
-      title: titleField.value || 'Piece ' + (this.state.collection.length + 1),
+      title: titleField.value || 'Piece ' + (this.state.data.pieces.length + 1),
       height:
         utils.toInches(
           heightFieldFt.value,
@@ -43,7 +45,9 @@ module.exports = React.createClass({
       widthFieldIn.value = '0';
 
       this.setState({
-        collection: this.state.collection.concat(piece)
+        data: {
+          pieces: this.state.data.pieces.concat(piece)
+        }
       });
     } else {
       // TODO: form validation error message
@@ -57,10 +61,12 @@ module.exports = React.createClass({
   // Remove a piece from the collection.
   destroy(piece, e) {
     e.preventDefault();
-    var _data = this.state.collection.filter((target) => target !== piece);
+    var _data = this.state.data.pieces.filter((target) => target !== piece);
 
     this.setState({
-      collection: _data
+      data: {
+        pieces: _data
+      }
     });
   },
 
@@ -68,12 +74,70 @@ module.exports = React.createClass({
     // TODO: Edit a piece already present in the collection.
   },
 
+  reorder(pieces, dragging) {
+    var data = this.state.data;
+    data.pieces = pieces;
+    data.dragging = dragging;
+    this.setState({
+      data: data
+    });
+  },
+
+  dragStart(e) {
+console.log('start drag');
+    this.dragged = Number(e.currentTarget.dataset.id);
+    e.dataTransfer.effectAllowed = 'move';
+
+    // Fix for Firefox.
+    e.dataTransfer.setData('text/html', null);
+  },
+
+  dragEnd(e) {
+console.log('end drag');
+    // Update state.
+    this.reorder(this.state.data.pieces, undefined);
+  },
+
+  dragOver(e) {
+    e.preventDefault();
+    var over = e.currentTarget;
+    var dragging = this.state.data.dragging;
+    var from = isFinite(dragging) ? dragging : this.dragged;
+    var to = Number(over.dataset.id);
+    if ((e.clientY - over.offsetTop) > (over.offsetHeight / 2)) to++;
+    if (from < to) to--;
+
+    // Move from 'a' to 'b'
+    var pieces = this.state.data.pieces;
+    pieces.splice(to, 0, pieces.splice(from, 1)[0]);
+    this.reorder(pieces, to);
+  },
+
   render() {
+    var len = this.state.data.pieces.length;
     // Build list of projects to display.
-    var projectPieces = this.state.collection.map((piece, index) => {
+    var projectPieces = this.state.data.pieces.map((piece, index) => {
+      // Only make draggable if there's more than 1 piece in the collection.
+      if (len > 1) {
+        return (
+          <ProjectPiece
+            dragging={this.state.data.dragging}
+            key={index}
+            index={index}
+            onDestroy={this.destroy.bind(this, piece)}
+            onEdit={this.edit}
+            canDrag='true'
+            onDragStart={this.dragStart}
+            onDragEnd={this.dragEnd}
+            onDragOver={this.dragOver}
+            piece={piece} />
+        );
+      }
+
       return (
         <ProjectPiece
           key={index}
+          index={index}
           onDestroy={this.destroy.bind(this, piece)}
           onEdit={this.edit}
           piece={piece} />
@@ -83,11 +147,11 @@ module.exports = React.createClass({
     return (
       <div>
         {
-          this.state.collection.length ?
+          len ?
             <div className="projectDisplay">
-              <ol className="projectList">
+              <ul className="projectList">
                 {projectPieces}
-              </ol>
+              </ul>
             </div> :
             <p><em>No pieces in current project.</em></p>
         }
@@ -140,8 +204,8 @@ module.exports = React.createClass({
         </form>
 
         {
-          this.state.collection.length ?
-            <ProjectCanvas settings={this.props.settings} collection={this.state.collection} /> :
+          len ?
+            <ProjectCanvas settings={this.props.settings} collection={this.state.data.pieces} /> :
             false
         }
       </div>
