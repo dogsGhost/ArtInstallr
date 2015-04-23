@@ -27,10 +27,6 @@ label {
   padding-right: 10px;
 }
 
-.projectDisplay {
-  margin: 0 0 10px;
-}
-
 .projectList {
 
 }
@@ -45,5 +41,5 @@ label {
 }
 
 .dragging {
-  background: #ecf791;
+  background: #fcf8e3;
 }

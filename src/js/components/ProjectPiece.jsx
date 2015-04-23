@@ -34,8 +34,8 @@ const ProjectPiece = React.createClass({
         onDragOver={this.props.onDragOver}
         className={classes}
       >
-        {this.props.draggable === 'true' ? <span className="btn btn-link">&#8597;</span> : false}
-        {this.props.index + 1}.&nbsp;
+        {this.props.canDrag === 'true' ? <span className="btn btn-link">&#8597;</span> : false}
+        <span className="projectList-item-number">{this.props.index + 1}.</span>
         {this.props.piece.title}
         <a href="#" className="btn btn-link disabled">Details <span className="caret"></span></a>
         <a href="#" className="btn btn-link disabled" onClick={this.props.onEdit}>Edit</a>

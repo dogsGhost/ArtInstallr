@@ -69,9 +69,9 @@ module.exports = React.createClass({
   },
 
   reorder(pieces, dragging) {
+    this.dragging = dragging;
     this.setState({
-      pieces: pieces,
-      dragging: dragging
+      pieces: pieces
     });
   },
 
@@ -91,8 +91,7 @@ module.exports = React.createClass({
   dragOver(e) {
     e.preventDefault();
     var over = e.currentTarget;
-    var dragging = this.state.dragging;
-    var from = isFinite(dragging) ? dragging : this.dragged;
+    var from = isFinite(this.dragging) ? this.dragging : this.dragged;
     var to = Number(over.dataset.id);
     if ((e.clientY - over.offsetTop) > (over.offsetHeight / 2)) to++;
     if (from < to) to--;
@@ -111,7 +110,7 @@ module.exports = React.createClass({
       if (len > 1) {
         return (
           <ProjectPiece
-            dragging={this.state.dragging}
+            dragging={this.dragging}
             key={index}
             index={index}
             onDestroy={this.destroy.bind(this, piece)}
@@ -138,11 +137,9 @@ module.exports = React.createClass({
       <div>
         {
           len ?
-            <div className="projectDisplay">
-              <ul className="projectList list-unstyled">
-                {projectPieces}
-              </ul>
-            </div> :
+            <ul className="projectList list-unstyled">
+              {projectPieces}
+            </ul> :
             <p><em>No pieces in current project.</em></p>
         }
 
