@@ -31,8 +31,17 @@ label {
   margin: 0 0 10px;
 }
 
+.projectList {
+
+}
+
 .projectList-item {
   cursor: ns-resize;
+  border-top: 1px solid #eee;
+}
+
+.projectList-item:first-child {
+  border: none;
 }
 
 .dragging {

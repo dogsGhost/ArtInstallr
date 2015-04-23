@@ -7,9 +7,7 @@ module.exports = React.createClass({
   getInitialState() {
     return {
       // Start with an empty collection.
-      data: {
         pieces: []
-      }
     };
   },
 
@@ -22,7 +20,7 @@ module.exports = React.createClass({
     var widthFieldIn = React.findDOMNode(this.refs.pieceWidthIn);
     var piece = {
       // Generic fallback title if none is given.
-      title: titleField.value || 'Piece ' + (this.state.data.pieces.length + 1),
+      title: titleField.value || 'Piece ' + (this.state.pieces.length + 1),
       height:
         utils.toInches(
           heightFieldFt.value,
@@ -45,9 +43,7 @@ module.exports = React.createClass({
       widthFieldIn.value = '0';
 
       this.setState({
-        data: {
-          pieces: this.state.data.pieces.concat(piece)
-        }
+        pieces: this.state.pieces.concat(piece)
       });
     } else {
       // TODO: form validation error message
@@ -61,12 +57,10 @@ module.exports = React.createClass({
   // Remove a piece from the collection.
   destroy(piece, e) {
     e.preventDefault();
-    var _data = this.state.data.pieces.filter((target) => target !== piece);
+    var _data = this.state.pieces.filter((target) => target !== piece);
 
     this.setState({
-      data: {
-        pieces: _data
-      }
+      pieces: _data
     });
   },
 
@@ -75,16 +69,13 @@ module.exports = React.createClass({
   },
 
   reorder(pieces, dragging) {
-    var data = this.state.data;
-    data.pieces = pieces;
-    data.dragging = dragging;
     this.setState({
-      data: data
+      pieces: pieces,
+      dragging: dragging
     });
   },
 
   dragStart(e) {
-console.log('start drag');
     this.dragged = Number(e.currentTarget.dataset.id);
     e.dataTransfer.effectAllowed = 'move';
 
@@ -93,35 +84,34 @@ console.log('start drag');
   },
 
   dragEnd(e) {
-console.log('end drag');
     // Update state.
-    this.reorder(this.state.data.pieces, undefined);
+    this.reorder(this.state.pieces, undefined);
   },
 
   dragOver(e) {
     e.preventDefault();
     var over = e.currentTarget;
-    var dragging = this.state.data.dragging;
+    var dragging = this.state.dragging;
     var from = isFinite(dragging) ? dragging : this.dragged;
     var to = Number(over.dataset.id);
     if ((e.clientY - over.offsetTop) > (over.offsetHeight / 2)) to++;
     if (from < to) to--;
 
     // Move from 'a' to 'b'
-    var pieces = this.state.data.pieces;
+    var pieces = this.state.pieces;
     pieces.splice(to, 0, pieces.splice(from, 1)[0]);
     this.reorder(pieces, to);
   },
 
   render() {
-    var len = this.state.data.pieces.length;
+    var len = this.state.pieces.length;
     // Build list of projects to display.
-    var projectPieces = this.state.data.pieces.map((piece, index) => {
+    var projectPieces = this.state.pieces.map((piece, index) => {
       // Only make draggable if there's more than 1 piece in the collection.
       if (len > 1) {
         return (
           <ProjectPiece
-            dragging={this.state.data.dragging}
+            dragging={this.state.dragging}
             key={index}
             index={index}
             onDestroy={this.destroy.bind(this, piece)}
@@ -149,7 +139,7 @@ console.log('end drag');
         {
           len ?
             <div className="projectDisplay">
-              <ul className="projectList">
+              <ul className="projectList list-unstyled">
                 {projectPieces}
               </ul>
             </div> :
@@ -205,7 +195,7 @@ console.log('end drag');
 
         {
           len ?
-            <ProjectCanvas settings={this.props.settings} collection={this.state.data.pieces} /> :
+            <ProjectCanvas settings={this.props.settings} collection={this.state.pieces} /> :
             false
         }
       </div>
