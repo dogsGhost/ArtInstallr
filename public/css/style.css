@@ -41,16 +41,14 @@ label {
   margin: 0 0 10px;
 }
 
-.installation {
-  overflow-x: scroll;
-  margin: 10px 0 0;
-  padding: 4em 20px 0;
+/*.installation {
+  padding: 4em 0 0;
   background: #eee;
-}
+}*/
 
 .wallView {
+  display: block;
   margin: 0 auto;
-  position: relative;
   background: #fff;
 }
 
