@@ -22,6 +22,10 @@ const ProjectPiece = React.createClass({
     piece: React.PropTypes.object.isRequired
   },
 
+  handleDestroyClick() {
+    this.props.onDestroy(this.props.piece);
+  },
+
   render() {
     var dragging = (this.props.index === this.props.dragging) ? 'dragging' : '';
     var classes = 'projectList-item ' + dragging;
@@ -34,12 +38,12 @@ const ProjectPiece = React.createClass({
         onDragOver={this.props.onDragOver}
         className={classes}
       >
-        {this.props.canDrag === 'true' ? <span className="btn btn-link">&#8597;</span> : false}
+        {this.props.canDrag === 'true' ? <span className="btn">&#8597;</span> : false}
         <span className="projectList-item-number">{this.props.index + 1}.</span>
         {this.props.piece.title}
-        <a href="#" className="btn btn-link disabled">Details <span className="caret"></span></a>
-        <a href="#" className="btn btn-link disabled" onClick={this.props.onEdit}>Edit</a>
-        <button type="button" className="close" aria-label="Close" onClick={this.props.onDestroy}><span aria-hidden="true">&times;</span></button>
+        <a href="#" className="btn btn-link">Details <span className="caret"></span></a>
+        <button type="button" className="btn btn-link" onClick={this.props.onEdit}>Edit</button>
+        <button type="button" className="close" aria-label="Close" onClick={this.handleDestroyClick}><span aria-hidden="true">&times;</span></button>
       </li>
     );
   }

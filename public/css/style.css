@@ -37,41 +37,19 @@ label {
   padding-right: 10px;
 }
 
-.projectDisplay {
-  margin: 0 0 10px;
+.projectList {
+
 }
 
-/*.installation {
-  padding: 4em 0 0;
-  background: #eee;
-}*/
-
-.wallView {
-  display: block;
-  margin: 0 auto;
-  background: #fff;
+.projectList-item {
+  cursor: ns-resize;
+  border-top: 1px solid #eee;
 }
 
-.piece {
-  position: absolute;
-  background: #777;
-  /*cursor: move;*/
+.projectList-item:first-child {
+  border: none;
 }
 
-.wallView-text,
-.piece-name {
-  display: block;
-  color: #fff;
-  text-align: center;
-}
-
-.wallView-text {
-  padding: 4px;
-  color: #ccc;
-}
-
-.piece-name {
-  position: relative;
-  top: 50%;
-  margin-top: -7px;
+.dragging {
+  background: #fcf8e3;
 }

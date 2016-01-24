@@ -3,6 +3,7 @@
   "version": "0.4.2",
   "description": "",
   "main": "gulpfile.js",
+  "keywords": ["jquery-plugin"],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,7 +14,7 @@
     "react": "^0.13.1"
   },
   "devDependencies": {
-    "babelify": "^6.0.2",
+    "babelify": "^6.1.0",
     "browser-sync": "^2.6.4",
     "browserify": "^9.0.8",
     "gulp": "^3.8.11",

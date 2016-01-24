@@ -55,12 +55,9 @@ module.exports = React.createClass({
   },
 
   // Remove a piece from the collection.
-  destroy(piece, e) {
-    e.preventDefault();
-    var _data = this.state.pieces.filter((target) => target !== piece);
-
+  destroy(piece) {
     this.setState({
-      pieces: _data
+      pieces: this.state.pieces.filter((value) => value !== piece)
     });
   },
 
@@ -83,7 +80,7 @@ module.exports = React.createClass({
     e.dataTransfer.setData('text/html', null);
   },
 
-  dragEnd(e) {
+  dragEnd() {
     // Update state.
     this.reorder(this.state.pieces, undefined);
   },
@@ -113,7 +110,7 @@ module.exports = React.createClass({
             dragging={this.dragging}
             key={index}
             index={index}
-            onDestroy={this.destroy.bind(this, piece)}
+            onDestroy={this.destroy}
             onEdit={this.edit}
             canDrag='true'
             onDragStart={this.dragStart}
